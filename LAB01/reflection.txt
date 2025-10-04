@@ -1,0 +1,6 @@
+Python is very begginer friendly and does not reuire a lot of in depth code knowledge
+as it uses some of the most common words as a code which makes it much more readable and 
+a lot of it's built in function makes it much more versatile.
+I have found that we cannot assign a value inside any of the conditional statements
+which really got me confused as it was not a thing in c/c++
+Because of this I have realized that I spend more time on logic rather than the syntax.
