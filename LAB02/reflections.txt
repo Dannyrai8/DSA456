@@ -1,0 +1,5 @@
+Recursion can be eligent but slow and repeating continious use of
+same pattern is very resource hungry where as itterative solutions are generally more faster 
+and more efficient for simple numeric problems Because they do calculations based on O(n) meaning 
+it loops n times where as in recursion it runs the funcitons for 2 to the of n times. Which 
+is way bigger when dealing with bigger numbers.
