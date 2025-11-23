@@ -1,0 +1,90 @@
+# Name : Danny Rai
+# student id: 147986236
+class ChainNode:
+    def __init__(self, k, v, nxt=None):
+        self.k = k
+        self.v = v
+        self.nxt = nxt
+
+
+class ChainingTable:
+    def __init__(self, capacity=32):
+        self.bucket_count = capacity
+        self.buckets = [None] * capacity
+        self.count = 0
+
+    # Produces a stable bucket index so each key maps to a valid position in the table
+    def _hash(self, key):
+        h = hash(key)
+        if h < 0: h = -h
+        return h % self.bucket_count
+
+    # Expands the table by doubling its buckets and redistributing all existing entries
+    def _grow(self):
+        old_buckets = self.buckets
+        self.bucket_count *= 2
+        self.buckets = [None] * self.bucket_count
+        self.count = 0
+        for chain in old_buckets:
+            cursor = chain
+            while cursor:
+                self.insert(cursor.k, cursor.v)
+                cursor = cursor.nxt
+
+    # Inserts a new key–value pair if the key is not already present
+    def insert(self, key, value):
+        idx = self._hash(key)
+        node = self.buckets[idx]
+        while node:
+            if node.k == key: return False
+            node = node.nxt
+        new_entry = ChainNode(key, value)
+        if self.buckets[idx] is not None:
+            new_entry.nxt = self.buckets[idx]
+        self.buckets[idx] = new_entry
+        self.count += 1
+        if self.count > self.bucket_count: self._grow()
+        return True
+
+    # Updates the value of an existing key, if present
+    def modify(self, key, value):
+        idx = self._hash(key)
+        node = self.buckets[idx]
+        while node:
+            if node.k == key:
+                node.v = value
+                return True
+            node = node.nxt
+        return False
+
+    # Removes the key from its chain and re-links the remaining nodes
+    def remove(self, key):
+        idx = self._hash(key)
+        node = self.buckets[idx]
+        prev = None
+        while node:
+            if node.k == key:
+                if prev is None: self.buckets[idx] = node.nxt
+                else: prev.nxt = node.nxt
+                self.count -= 1
+                return True
+            prev = node
+            node = node.nxt
+        return False
+
+    # Locates a key and returns its stored value, if found
+    def search(self, key):
+        idx = self._hash(key)
+        node = self.buckets[idx]
+        while node:
+            if node.k == key: return node.v
+            node = node.nxt
+        return None
+
+    # Returns the number of buckets available
+    def capacity(self):
+        return self.bucket_count
+
+    # Provides the amount of stored items
+    def __len__(self):
+        return self.count
