@@ -22,9 +22,9 @@ class SinglyLinkedList:
         node = Node(data)
         if self.is_empty(): self.head = node
         else:
-            temp = self.head
-            while temp.next:  temp = temp.next
-            temp.next = node
+            current_list = self.head
+            while current_list.next:  current_list = current_list.next
+            current_list.next = node
 
     def insert_after(self, target, data):
         if target is None: return False
@@ -37,42 +37,42 @@ class SinglyLinkedList:
         if self.head == target:
             self.head = self.head.next
             return True
-        temp = self.head
-        while temp.next and temp.next != target: temp = temp.next
+        current_list = self.head
+        while current_list.next and current_list.next != target: current_list = current_list.next
 
-        if temp.next == target:
-            temp.next = target.next
+        if current_list.next == target:
+            current_list.next = target.next
             return True
         return False
 
     def search(self, data):
-        temp = self.head
-        while temp:
-            if temp.data == data: return temp
-            temp = temp.next
+        current_list = self.head
+        while current_list:
+            if current_list.data == data: return current_list
+            current_list = current_list.next
         return None
 
     def size(self):
         count = 0
-        temp = self.head
-        while temp:
+        current_list = self.head
+        while current_list:
             count += 1
-            temp = temp.next
+            current_list = current_list.next
         return count
 
     def to_list(self) :
         items = []
-        temp = self.head
-        while temp:
-            items.append(temp.data)
-            temp = temp.next
+        current_list = self.head
+        while current_list:
+            items.append(current_list.data)
+            current_list = current_list.next
         return items
 
     def print(self) :
-        temp = self.head
-        while temp is not None:
-            print(temp.data)
-            temp = temp.next
+        current_list = self.head
+        while current_list is not None:
+            print(current_list.data)
+            current_list = current_list.next
         print("None")
 
 
